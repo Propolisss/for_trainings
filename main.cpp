@@ -6,6 +6,7 @@
 std::vector<std::vector<size_t>> delt{};
 std::vector<size_t> nums{};
 std::string pust;
+size_t counter = 0;
 
 //size_t f(size_t start, size_t end, size_t current)
 //{
@@ -52,6 +53,59 @@ std::string pust;
 //	}
 //}
 
+bool not_33(std::string& st)
+{
+	size_t temp_n = 2;
+
+	for (size_t i = 0; i < st.length(); i++)
+	{
+		if (st[i] == '1') temp_n += 1;
+		if (st[i] == '2') temp_n += 3;
+		if (st[i] == '3') temp_n *= 2;
+		if (temp_n == 33) return false;
+	}
+
+	return true;
+}
+bool not_2x(std::string& st)
+{
+	for (size_t i = 1; i < st.length(); i++)
+	{
+		if (st[i - 1] == '3' && st[i] == '3') return false;
+	}
+	return true;
+}
+bool is_51(std::string& st)
+{
+	size_t temp_n = 2;
+
+	for (size_t i = 0; i < st.length(); i++)
+	{
+		if (st[i] == '1') temp_n += 1;
+		if (st[i] == '2') temp_n += 3;
+		if (st[i] == '3') temp_n *= 2;
+	}
+
+	if (temp_n != 51) return false;
+	return true;
+}
+bool is_18(std::string& st)
+{
+	bool flag1 = false;
+	bool flag2 = false;
+	size_t temp_n = 2;
+	for (size_t i = 0; i < st.length(); i++)
+	{
+		if (st[i] == '1') temp_n += 1;
+		if (st[i] == '2') temp_n += 2;
+		if (st[i] == '3') temp_n *= 3;
+		if (temp_n == 15) flag1 = true;
+		if (temp_n == 30) flag2 = true;
+	}
+
+	if (flag1 && flag2) return true;
+	return false;
+}
 
 size_t f(size_t start, size_t end, size_t current, std::string& pust)
 {
@@ -62,25 +116,31 @@ size_t f(size_t start, size_t end, size_t current, std::string& pust)
 
 	for (size_t i = 1; i < previous.size(); i++)
 	{
-		if (previous[i - 1] == '1' && previous[i] == '1')
+		if (previous[i - 1] == '3' && previous[i] == '3')
 		{
+			previous.pop_back();
 			return 0;
 		}
 	}
-	if (start > end || start == 23)
+
+	if (start > end || start == 12 || start == 20)
 	{
+		previous.pop_back();
 		return 0;
 	}
 
 	if (start == end)
 	{
+		if (is_18(previous))
+			counter++;
+		//std::cout << counter << '\n';
 		//std::cout << previous << '\n';
 		previous.pop_back();
 		return 1;
 	}
 	else
 	{
-		return f(start + 1, end, 1, previous) + f(start + 2, end, 2, previous) + f(start * 2, end, 3, previous);
+		return f(start + 1, end, 1, previous) + f(start + 2, end, 2, previous) + f(start * 3, end, 3, previous);
 	}
 }
 
@@ -105,8 +165,9 @@ int main()
 	}
 	std::cout << std::max(std::max(st1, st2), st3);*/
 
-	
-	std::cout << f(3, 11, 0, pust) * f(11, 79, 0, pust) << '\n';
-	
+	f(2, 38, 0, pust);;
+	//std::cout << f(2, 18, 0, pust) * f(18, 51, 0, pust) << '\n';
+	std::cout << counter << '\n';
+
 	return 0;
 }
