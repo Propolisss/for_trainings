@@ -3,11 +3,13 @@
 #include <string>
 #include <functional>
 #include <algorithm>
+#include <map>
 std::vector<std::vector<size_t>> delt{};
 std::vector<size_t> nums{};
 std::string pust;
 size_t counter = 0;
-
+size_t count_last = 0;
+size_t count_first = 0;
 //size_t f(size_t start, size_t end, size_t current)
 //{
 //	if (!delt.empty()) nums = delt[delt.size() - 1];
@@ -52,6 +54,10 @@ size_t counter = 0;
 //		return f1 + f2 + f3;
 //	}
 //}
+
+
+
+
 
 bool not_33(std::string& st)
 {
@@ -106,43 +112,101 @@ bool is_18(std::string& st)
 	if (flag1 && flag2) return true;
 	return false;
 }
+//size_t f(size_t start, size_t end, size_t current, std::string& pust)
+//{
+//	std::string previous = pust;
+//	if (current == 1) previous += '1';
+//	if (current == 2) previous += '2';
+//	if (current == 3) previous += '3';
+//
+//	for (size_t i = 1; i < previous.size(); i++)
+//	{
+//		if (previous[i - 1] == '3' && previous[i] == '3')
+//		{
+//			previous.pop_back();
+//			return 0;
+//		}
+//	}
+//
+//	if (start > end || start == 12 || start == 20)
+//	{
+//		previous.pop_back();
+//		return 0;
+//	}
+//
+//	if (start == end)
+//	{
+//		if (is_18(previous))
+//			counter++;
+//		//std::cout << counter << '\n';
+//		//std::cout << previous << '\n';
+//		previous.pop_back();
+//		return 1;
+//	}
+//	else
+//	{
+//		return f(start + 1, end, 1, previous) + f(start + 2, end, 2, previous) + f(start * 3, end, 3, previous);
+//	}
+//}
 
-size_t f(size_t start, size_t end, size_t current, std::string& pust)
+//size_t f(size_t start, size_t end, size_t current, std::string& pust)
+//{
+//	std::string previous = pust;
+//	if (current == 1) previous += '1';
+//	if (current == 2) previous += '2';
+//	if (current == 3) previous += '3';
+//
+//	for (size_t i = 1; i < previous.size(); i++)
+//	{
+//		if (previous[i - 1] == '3' && previous[i] == '3')
+//		{
+//			previous.pop_back();
+//			return 0;
+//		}
+//	}
+//
+//	if (start > end || start == 33)
+//	{
+//		previous.pop_back();
+//		return 0;
+//	}
+//
+//	if (start == end)
+//	{
+//		if (start == 18 && previous[previous.length() - 1] == '3') count_last++;
+//		if (start == 51 && previous[0] == '3') count_first++;
+//		//if (is_18(previous))
+//			//counter++;
+//		//std::cout << counter << '\n';
+//		//std::cout << previous << '\n';
+//		previous.pop_back();
+//		return 1;
+//	}
+//	else
+//	{
+//		return f(start + 1, end, 1, previous) + f(start + 3, end, 2, previous) + f(start * 2, end, 3, previous);
+//	}
+//}
+
+
+
+size_t add1(size_t n) { return n + 1; }
+size_t add2(size_t n) { return n + 2; }
+size_t pr(size_t n) { return n * 2; }
+struct MyKey
 {
-	std::string previous = pust;
-	if (current == 1) previous += '1';
-	if (current == 2) previous += '2';
-	if (current == 3) previous += '3';
+	size_t n_;
+	size_t count_;
+	bool repeat_;
+};
 
-	for (size_t i = 1; i < previous.size(); i++)
-	{
-		if (previous[i - 1] == '3' && previous[i] == '3')
-		{
-			previous.pop_back();
-			return 0;
-		}
-	}
+std::map<MyKey, int> mp;
 
-	if (start > end || start == 12 || start == 20)
-	{
-		previous.pop_back();
-		return 0;
-	}
 
-	if (start == end)
-	{
-		if (is_18(previous))
-			counter++;
-		//std::cout << counter << '\n';
-		//std::cout << previous << '\n';
-		previous.pop_back();
-		return 1;
-	}
-	else
-	{
-		return f(start + 1, end, 1, previous) + f(start + 2, end, 2, previous) + f(start * 3, end, 3, previous);
-	}
+size_t f(size_t start, size_t count, bool repeat)
+{
 }
+
 
 int main()
 {
@@ -165,9 +229,11 @@ int main()
 	}
 	std::cout << std::max(std::max(st1, st2), st3);*/
 
-	f(2, 38, 0, pust);;
-	//std::cout << f(2, 18, 0, pust) * f(18, 51, 0, pust) << '\n';
-	std::cout << counter << '\n';
+	//f(2, 38, 0, pust);;
+	//std::cout << f(2, 18, 0, pust) * f(18, 51, 0, pust) - count_last * count_first << '\n';
+	//std::cout << counter << '\n';
+
+
 
 	return 0;
 }
